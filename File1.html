@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>India Land Unit Converter — State-aware • Professional</title>
+  <meta name="description" content="State-aware India land converter: bigha, katha, decimal, guntha, cent, marla, kanal, acre, sqft, hectare. Per-state variations and official portals included." />
+  <meta name="keywords" content="bigha to acre, land converter india, land measurement, decimal to acre, state land records, BanglarBhumi, Bhulekh" />
+  <!-- Structured data (basic) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"India Land Unit Converter",
+    "url":"https://example.com",
+    "description":"State-aware land unit converter for India (bigha, katha, decimal, cent, guntha, marla, kanal, acre, sqft, hectare).",
+    "applicationCategory":"Utilities",
+    "operatingSystem":"All",
+    "browserRequirements":"Modern browser"
+  }
+  </script>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f6f8fb; --card:#ffffff; --muted:#6b7280;
+      --accent:#0f766e; --accent-2:#7c3aed; --glass:rgba(255,255,255,0.6);
+      --radius:14px; --elev: 0 10px 30px rgba(12,18,36,0.08);
+      --success:#059669;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: light;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#f0f4f8 0%,var(--bg) 100%);color:#0b1220}
+    a{color:var(--accent-2);text-decoration:none}
+    .container{max-width:1200px;margin:28px auto;padding:18px}
+    header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+    .logo{
+      width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--accent-2),var(--accent));
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:20px;box-shadow:0 8px 30px rgba(15,23,42,0.08)
+    }
+    h1{margin:0;font-size:20px}
+    .subtitle{color:var(--muted);font-size:13px;margin-top:4px}
+
+    /* Grid */
+    .grid{display:grid;grid-template-columns: 1fr; gap:16px}
+    @media(min-width:980px){ .grid{grid-template-columns: 1fr 380px} }
+
+    /* Cards */
+    .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--elev)}
+    .panel-title{font-weight:700;margin-bottom:8px}
+    label{display:block;font-size:13px;margin-bottom:8px;color:#0b1220}
+    select,input{width:100%;padding:12px;border-radius:10px;border:1px solid #e8eef8;background:transparent;font-size:15px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .controls{display:flex;gap:10px;align-items:center;margin-top:12px}
+    .btn{padding:10px 12px;border-radius:10px;border:0;font-weight:600;cursor:pointer}
+    .btn-primary{background:var(--accent);color:white}
+    .btn-alt{background:#eef2ff;color:var(--accent-2)}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* result card */
+    .result{margin-top:12px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(124,58,237,0.03), rgba(15,118,110,0.02));border:1px solid rgba(124,58,237,0.05)}
+    .big{font-size:22px;font-weight:700}
+    .detail{font-size:13px;color:var(--muted);margin-top:6px}
+
+    /* right column */
+    .meta{display:grid;gap:10px}
+    .govlink{padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));border:1px solid #eef2f9}
+    .ad{height:110px;border-radius:10px;border:1px dashed #e6eef8;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+
+    /* accordion */
+    .accordion-item{border-top:1px solid #f1f5f9;padding:12px 0}
+    .acc-title{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+    .acc-body{margin-top:10px;color:var(--muted);font-size:13px;display:none}
+
+    /* footer */
+    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* micro animations */
+    .fade-in{animation:fadeIn .45s ease both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none}}
+
+    /* responsive tweaks */
+    @media(max-width:520px){
+      .row{grid-template-columns:1fr}
+      .controls{flex-direction:column;align-items:stretch}
+    }
+
+    /* subtle helper */
+    .muted{color:var(--muted)}
+    .chip{display:inline-block;padding:6px 8px;border-radius:999px;background:#f3f7f8;font-size:12px;color:#334155}
+    .ks{font-variant-numeric:tabular-nums}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">ILC</div>
+      <div>
+        <h1>India Land Unit Converter — Professional</h1>
+        <div class="subtitle">State-aware conversions • educational tooltips • official portal links • SEO-ready</div>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- LEFT (Main tools) -->
+      <section class="card fade-in" aria-labelledby="main-title">
+        <div id="main-title" class="panel-title">Convert land units — choose state first</div>
+
+        <label for="state">State / Union Territory</label>
+        <select id="state"></select>
+
+        <div style="height:10px"></div>
+
+        <label for="regionUnits">Units & value</label>
+        <div class="row">
+          <select id="fromUnit"></select>
+          <input id="value" type="number" step="any" value="1" aria-label="value" />
+        </div>
+
+        <div style="height:10px"></div>
+
+        <label for="toUnit">To</label>
+        <select id="toUnit"></select>
+
+        <div class="result" id="resultBox" role="region" aria-live="polite">
+          <div class="big ks" id="resultVal">—</div>
+          <div class="detail" id="resultDetail">Select state and units to convert. Results show per-state bigha/katha definitions when relevant.</div>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn-primary" id="convertBtn">Convert</button>
+          <button class="btn btn-alt" id="swapBtn">Swap Units</button>
+          <button class="btn" id="copyBtn" style="background:var(--success);color:white">Copy</button>
+          <div style="flex:1"></div>
+          <div class="small muted">Precision: <input id="precision" type="number" value="6" min="0" max="12" style="width:72px;padding:6px;border-radius:8px;border:1px solid #eef2f9;margin-left:8px" /></div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="panel-title">Quick reference</div>
+        <div class="small muted" id="quickRef">
+          1 Acre = 43,560 sq.ft · 1 Decimal ≈ 0.01 Acre (where used) · Bigha varies by state/district.
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="panel-title">Export / Share</div>
+        <div class="small muted">Download or share the conversion result</div>
+        <div style="height:8px"></div>
+        <div class="controls">
+          <button class="btn" id="downloadCSV">Download CSV</button>
+          <button class="btn" id="downloadJSON">Download JSON</button>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="panel-title">Educational: common units</div>
+        <div class="small muted">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:8px">
+            <div class="chip">sq.ft — Square foot</div>
+            <div class="chip">acre — Acre</div>
+            <div class="chip">hectare — Hectare</div>
+            <div class="chip">bigha — Regional (varies)</div>
+            <div class="chip">katha / biswa — Sub-units</div>
+            <div class="chip">cent — 1/100 acre (South India)</div>
+            <div class="chip">guntha — ~1089 sq.ft (varies)</div>
+            <div class="chip">marla/kanal — Punjab/Haryana units</div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RIGHT (Metadata, gov links, accordion) -->
+      <aside class="card fade-in">
+        <div class="panel-title">State details & official portals</div>
+        <div id="stateInfo" class="muted">Select a state to see unit conventions & the official land-portal link.</div>
+        <a id="govLink" class="govlink" href="#" target="_blank" rel="noopener">Official land record portal link</a>
+
+        <div style="height:12px"></div>
+
+        <div class="panel-title">Useful tools & notes</div>
+        <div class="muted" style="font-size:13px">District-level variations exist — for legal or title matters consult the state's revenue office.</div>
+
+        <div style="height:12px"></div>
+
+        <div class="panel-title">Ad space</div>
+        <div class="ad">Ad placeholder — replace with ad code</div>
+
+        <div style="height:12px"></div>
+
+        <div class="panel-title">More info</div>
+        <div class="accordion">
+          <div class="accordion-item">
+            <div class="acc-title" data-acc="u1"><div>What is Bigha?</div><div class="muted">▼</div></div>
+            <div id="u1" class="acc-body">Bigha is a traditional unit used across many states in India. Its size varies widely by region — e.g., ~6,800 sq.ft in some states to ~27,225 sq.ft in others; always choose your state for accurate conversions.</div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="acc-title" data-acc="u2"><div>What is Decimal?</div><div class="muted">▼</div></div>
+            <div id="u2" class="acc-body">Decimal commonly denotes 1/100 of an acre (0.01 acre). Widely used in West Bengal & some Eastern states.</div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="acc-title" data-acc="u3"><div>How precise are these conversions?</div><div class="muted">▼</div></div>
+            <div id="u3" class="acc-body">This app uses commonly cited per-state conversion values. District-level differences may exist. For legal uses, consult the state revenue office or official portal linked above.</div>
+          </div>
+
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="muted">Built with accuracy, ready to extend. Want district-level values or an interactive map next?</div>
+      <div style="height:8px"></div>
+      <div class="muted">— Cutie developer 🤍</div>
+    </footer>
+  </div>
+
+  <script>
+    /***** PROFESSIONAL STATE & UNITS DATA (expanded) *****/
+    // This collection is intentionally broad — replace links and refine numbers by district when needed.
+    // Numbers are common approximate conventions drawn from compilations.
+    const STATE_DATA = {
+      "West Bengal": { code:"WB", gov:"https://banglarbhumi.gov.in", note:"Decimal widely used (1 decimal ≈ 0.01 acre). 1 bigha commonly ≈ 14,400 sqft.", bigha_sqft:14400, units:["sqft","acre","decimal","bigha","katha"] },
+      "Bihar": { code:"BR", gov:"https://biharbhumi.bihar.gov.in", note:"Bigha often ≈ 27,220 sqft (varies by district)", bigha_sqft:27220, units:["sqft","acre","bigha","katha"] },
+      "Uttar Pradesh": { code:"UP", gov:"https://upbhulekh.gov.in", note:"Many references use 27,000 sqft per bigha.", bigha_sqft:27000, units:["sqft","acre","bigha","katha"] },
+      "Punjab": { code:"PB", gov:"https://landrecords.punjab.gov.in", note:"Uses marla/kanal; 1 marla ≈ 272.25 sqft; 1 kanal = 20 marla.", bigha_sqft:9070, units:["sqft","acre","marla","kanal","bigha"] },
+      "Haryana": { code:"HR", gov:"https://revenueharyana.gov.in", note:"Common local conventions include kanal/marla; 1 kanal ≈ 5,445 sqft.", bigha_sqft:27225, units:["sqft","acre","marla","kanal","bigha"] },
+      "Rajasthan": { code:"RJ", gov:"https://revenue.rajasthan.gov.in", note:"Common bigha ~27,255 sqft.", bigha_sqft:27255, units:["sqft","acre","bigha"] },
+      "Madhya Pradesh": { code:"MP", gov:"https://landrecords.mp.gov.in", note:"Bigha often ~12,000 sqft (varies).", bigha_sqft:12000, units:["sqft","acre","bigha"] },
+      "Gujarat": { code:"GJ", gov:"https://landrecords.gujarat.gov.in", note:"Gujarat reported bigha ≈ 17,424 sqft.", bigha_sqft:17424, units:["sqft","acre","bigha"] },
+      "Karnataka": { code:"KA", gov:"https://landrecords.karnataka.gov.in", note:"South uses cent/ground/gunta; 1 cent = 435.6 sqft; guntha ~1089 sqft.", bigha_sqft:null, units:["sqft","acre","cent","guntha","ground"] },
+      "Tamil Nadu": { code:"TN", gov:"https://eservices.tn.gov.in", note:"Cent used (1 cent = 435.6 sqft).", bigha_sqft:null, units:["sqft","acre","cent","ground"] },
+      "Kerala": { code:"KL", gov:"https://landrecords.kerala.gov.in", note:"Cent and local units used.", bigha_sqft:null, units:["sqft","acre","cent"] },
+      "Himachal Pradesh": { code:"HP", gov:"https://himachal.nic.in", note:"Bigha approx 8,712 sqft in many references", bigha_sqft:8712, units:["sqft","acre","bigha"] },
+      "Uttarakhand": { code:"UK", gov:"https://landrecords.uk.gov.in", note:"Bigha ~6,804 sqft often cited", bigha_sqft:6804, units:["sqft","acre","bigha"] },
+      "Assam": { code:"AS", gov:"https://dmre.assam.gov.in", note:"Commonly 14,400 sqft per bigha in some references", bigha_sqft:14400, units:["sqft","acre","bigha"] },
+      "Telangana": { code:"TG", gov:"https://dharani.telangana.gov.in", note:"South system — cent/gunta etc.", bigha_sqft:null, units:["sqft","acre","cent","guntha"] },
+      "Andhra Pradesh": { code:"AP", gov:"https://egreen.ap.gov.in", note:"Cent/guntha common in many districts", bigha_sqft:null, units:["sqft","acre","cent","guntha"] },
+      "Default": { code:"IN", gov:"https://india.gov.in", note:"Generic: use acre/sqft/ha. For state-specific, select a state.", bigha_sqft:null, units:["sqft","acre","hectare"] }
+    };
+
+    /* Units registry: every unit must map to/from sqft */
+    const UNITS = {
+      "sqft": {name:"Square foot", toSqft: v => v, fromSqft: v => v},
+      "acre": {name:"Acre", toSqft: v => v * 43560, fromSqft: v => v / 43560},
+      "hectare": {name:"Hectare", toSqft: v => v * 107639.104, fromSqft: v => v / 107639.104},
+      "decimal": {name:"Decimal (0.01 Acre)", toSqft: v => v * 435.6, fromSqft: v => v / 435.6},
+      "cent": {name:"Cent (South India, 0.01 Acre)", toSqft: v => v * 435.6, fromSqft: v => v / 435.6},
+      "guntha": {name:"Guntha/Gunta (~1089 sqft typical)", toSqft: v => v * 1089, fromSqft: v => v / 1089},
+      "marla": {name:"Marla (~272.25 sqft typical)", toSqft: v => v * 272.25, fromSqft: v => v / 272.25},
+      "kanal": {name:"Kanal (20 marla typical)", toSqft: v => v * 5445, fromSqft: v => v / 5445},
+      "bigha": {name:"Bigha (state variable)", toSqft: null, fromSqft:null},
+      "katha": {name:"Katha (varies) - subunit", toSqft: null, fromSqft:null},
+      "ground": {name:"Ground (often 2400 sqft in Chennai references)", toSqft: v => v * 2400, fromSqft: v => v / 2400}
+    };
+
+    /* Populate UI selects */
+    const stateSel = document.getElementById('state');
+    const fromUnit = document.getElementById('fromUnit');
+    const toUnit = document.getElementById('toUnit');
+    const valueInput = document.getElementById('value');
+    const resultVal = document.getElementById('resultVal');
+    const resultDetail = document.getElementById('resultDetail');
+    const stateInfo = document.getElementById('stateInfo');
+    const govLink = document.getElementById('govLink');
+    const precisionInput = document.getElementById('precision');
+
+    function populateStates(){
+      stateSel.innerHTML = "";
+      Object.keys(STATE_DATA).forEach(s=>{
+        const opt = document.createElement('option'); opt.value = s; opt.textContent = s;
+        stateSel.appendChild(opt);
+      });
+      stateSel.value = "West Bengal";
+    }
+
+    function populateUnitsForState(s){
+      const data = STATE_DATA[s] || STATE_DATA["Default"];
+      fromUnit.innerHTML = ""; toUnit.innerHTML = "";
+      // build a friendly list: union of data.units + always include standard units
+      const uset = new Set([...(data.units||[]), "sqft","acre","hectare"]);
+      // ensure order and friendly names
+      const order = ["sqft","acre","hectare","decimal","cent","bigha","katha","guntha","marla","kanal","ground"];
+      order.forEach(k=>{
+        if(uset.has(k) && UNITS[k]){
+          const o1 = document.createElement('option'); o1.value = k; o1.textContent = UNITS[k].name; fromUnit.appendChild(o1);
+          const o2 = document.createElement('option'); o2.value = k; o2.textContent = UNITS[k].name; toUnit.appendChild(o2);
+        }
+      });
+      fromUnit.value = data.units && data.units.includes("bigha") ? "bigha" : "sqft";
+      toUnit.value = "acre";
+    }
+
+    function bighaToSqft(v, state){
+      const s = STATE_DATA[state];
+      if(s && s.bigha_sqft) return v * s.bigha_sqft;
+      // fallback: if no state bigha defined, approximate 27225 sqft (commonly used) — but user will see note
+      return v * 27225;
+    }
+    function sqftToBigha(v, state){
+      const s = STATE_DATA[state];
+      if(s && s.bigha_sqft) return v / s.bigha_sqft;
+      return v / 27225;
+    }
+
+    function unitToSqft(value, unit, state){
+      value = Number(value) || 0;
+      if(unit === "bigha") return bighaToSqft(value, state);
+      if(unit === "katha"){
+        // katha is a subunit — some references: 1 katha = 1361 or 720 etc; we approximate via state if possible
+        // Simplify: if state has bigha -> often 1 bigha = 20 katha (common in parts) so katha = bigha/20
+        const s = STATE_DATA[state];
+        if(s && s.bigha_sqft) return (s.bigha_sqft / 20) * value;
+        return 1361 * value; // fallback ballpark
+      }
+      const u = UNITS[unit];
+      if(u && u.toSqft) return u.toSqft(value);
+      return value;
+    }
+
+    function sqftToUnit(value, unit, state){
+      value = Number(value) || 0;
+      if(unit === "bigha") return sqftToBigha(value, state);
+      if(unit === "katha"){
+        const s = STATE_DATA[state];
+        if(s && s.bigha_sqft) return value / (s.bigha_sqft / 20);
+        return value / 1361;
+      }
+      const u = UNITS[unit];
+      if(u && u.fromSqft) return u.fromSqft(value);
+      return value;
+    }
+
+    function convert(){
+      const state = stateSel.value;
+      const from = fromUnit.value;
+      const to = toUnit.value;
+      const raw = Number(valueInput.value || 0);
+      const precision = Math.max(0, Math.min(12, Number(precisionInput.value || 6)));
+
+      // to sqft then to dest
+      const sqft = unitToSqft(raw, from, state);
+      const out = sqftToUnit(sqft, to, state);
+
+      // Format numbers (but keep raw precision for downloads)
+      const fOut = Number(out).toLocaleString(undefined, {maximumFractionDigits: precision});
+      resultVal.textContent = `${fOut} ${UNITS[to] ? UNITS[to].name : to}`;
+      resultDetail.textContent = `${raw} ${UNITS[from] ? UNITS[from].name : from} → ${out.toFixed(Math.min(precision,12))} ${UNITS[to] ? UNITS[to].name : to}  (State: ${state})`;
+
+      // Update state info
+      const sdata = STATE_DATA[state] || STATE_DATA["Default"];
+      stateInfo.innerHTML = `<div style="font-weight:600">${state} — ${sdata.code || ''}</div><div class="muted" style="margin-top:6px">${sdata.note}</div>`;
+      if(sdata.gov){
+        govLink.href = sdata.gov; govLink.textContent = `Open official land portal for ${state}`;
+      } else {
+        govLink.href = "#"; govLink.textContent = `No portal link available`;
+      }
+    }
+
+    /* UI wiring */
+    populateStates();
+    populateUnitsForState(stateSel.value);
+    convert();
+
+    // events
+    stateSel.addEventListener('change', ()=>{
+      populateUnitsForState(stateSel.value);
+      convert();
+    });
+
+    document.getElementById('convertBtn').addEventListener('click', convert);
+    document.getElementById('swapBtn').addEventListener('click', ()=>{
+      const a = fromUnit.value; fromUnit.value = toUnit.value; toUnit.value = a; convert();
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', ()=>{
+      const text = `${valueInput.value} ${UNITS[fromUnit.value].name} = ${resultVal.textContent} (${stateSel.value})`;
+      navigator.clipboard?.writeText(text).then(()=>alert('Copied to clipboard'), ()=>alert(text));
+    });
+
+    // Downloads
+    document.getElementById('downloadCSV').addEventListener('click', ()=>{
+      const state = stateSel.value; const now = new Date().toISOString();
+      const csv = `"state","from_unit","value","to_unit","result","timestamp"\n"${state}","${UNITS[fromUnit.value].name}",${valueInput.value},"${UNITS[toUnit.value].name}","${resultVal.textContent}","${now}"`;
+      const blob = new Blob([csv], {type:'text/csv'}); const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'land-conversion.csv'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('downloadJSON').addEventListener('click', ()=>{
+      const payload = {
+        state: stateSel.value,
+        from: fromUnit.value,
+        fromLabel: UNITS[fromUnit.value].name,
+        value: Number(valueInput.value),
+        to: toUnit.value,
+        toLabel: UNITS[toUnit.value].name,
+        result: resultVal.textContent,
+        timestamp: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'}); const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'land-conversion.json'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Accordion
+    document.querySelectorAll('.acc-title').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const id = el.getAttribute('data-acc');
+        const body = document.getElementById(id);
+        if(!body) return;
+        // toggle
+        const showing = body.style.display === 'block';
+        document.querySelectorAll('.acc-body').forEach(b=>b.style.display='none');
+        document.querySelectorAll('.acc-title').forEach(t=>t.querySelector('.muted') && (t.querySelector('.muted').textContent='▼'));
+        if(!showing){
+          body.style.display = 'block';
+          el.querySelector('.muted').textContent = '▲';
+        }
+      });
+    });
+
+    // Basic accessibility + keyboard
+    valueInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') convert(); });
+    fromUnit.addEventListener('change', ()=>convert()); toUnit.addEventListener('change', ()=>convert());
+    precisionInput.addEventListener('change', ()=>convert());
+  </script>
+</body>
+</html>
